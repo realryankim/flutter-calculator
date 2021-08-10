@@ -13,7 +13,7 @@ class Calculator extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Calculator with Getx',
+      title: 'Calculator',
       theme: ThemeData(primarySwatch: Colors.grey),
       home: SimpleCalculator(),
     );
