@@ -41,6 +41,21 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
         if (equation == "") {
           equation = "0";
         }
+      } else if (buttonText == "%") {
+        // "%" functionality needs to be improved
+        equationFontSize = 40.0;
+        resultFontSize = 50.0;
+        expression = equation;
+
+        try {
+          Parser p = Parser();
+          Expression exp = p.parse(expression);
+
+          ContextModel cm = ContextModel();
+          result = '${exp.evaluate(EvaluationType.REAL, cm) / 100} ';
+        } catch (e) {
+          result = "Error";
+        }
       } else if (buttonText == "=") {
         equationFontSize = 40.0;
         resultFontSize = 50.0;
