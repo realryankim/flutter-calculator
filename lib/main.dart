@@ -1,3 +1,5 @@
+import 'package:calculator/src/binding/binding.dart';
+import 'package:calculator/src/getx_calculator.dart';
 import 'package:calculator/src/simple_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +17,8 @@ class Calculator extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Calculator',
       theme: ThemeData(primarySwatch: Colors.grey),
-      home: SimpleCalculator(),
+      initialBinding: Binding(),
+      home: GetxCalculator(),
     );
   }
 }

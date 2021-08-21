@@ -1,106 +1,19 @@
+import 'package:calculator/src/controller/calculator_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:math_expressions/math_expressions.dart';
 
-class SimpleCalculator extends StatefulWidget {
-  SimpleCalculator({Key? key}) : super(key: key);
-
-  @override
-  _SimpleCalculatorState createState() => _SimpleCalculatorState();
-}
-
-class _SimpleCalculatorState extends State<SimpleCalculator> {
-  late double width;
-  late double height;
-
-  String equation = "0";
-  String result = "0";
-  String expression = "";
-  double equationFontSize = 40.0;
-  double resultFontSize = 50.0;
-
-  @override
-  void didChangeDependencies() {
-    width = Get.width;
-    height = Get.height;
-
-    super.didChangeDependencies();
-  }
-
-  buttonPressed(String buttonText) {
-    setState(() {
-      if (buttonText == "AC") {
-        equation = "0";
-        result = "0";
-        equationFontSize = 40.0;
-        resultFontSize = 50.0;
-      } else if (buttonText == "➡") {
-        equationFontSize = 50.0;
-        resultFontSize = 40.0;
-        // substring 메서드 활용
-        // equation의 index 0번째부터 equation 길이에서 -1을 한 index 문자열까지 발췌한다. 즉, 문자열 제일 끝만 삭제해 나간다.
-        equation = equation.substring(0, equation.length - 1);
-        if (equation == "") {
-          equation = "0";
-          equationFontSize = 40.0;
-          resultFontSize = 50.0;
-        }
-      } else if (buttonText == "%") {
-        // "%" functionality needs to be improved
-        equationFontSize = 40.0;
-        resultFontSize = 50.0;
-        expression = equation;
-
-        try {
-          Parser p = Parser();
-          Expression exp = p.parse(expression);
-
-          ContextModel cm = ContextModel();
-          result = '${exp.evaluate(EvaluationType.REAL, cm) / 100} ';
-        } catch (e) {
-          result = "Error";
-        }
-      } else if (buttonText == "=") {
-        equationFontSize = 40.0;
-        resultFontSize = 50.0;
-
-        expression = equation;
-        expression = expression.replaceAll('÷', '/');
-        expression = expression.replaceAll('×', '*');
-        expression = expression.replaceAll('−', '-');
-
-        try {
-          Parser p = Parser();
-          Expression exp = p.parse(expression);
-
-          ContextModel cm = ContextModel();
-          result = '${exp.evaluate(EvaluationType.REAL, cm)}';
-        } catch (e) {
-          result = "Error";
-        }
-      } else {
-        if (equation == "0") {
-          equation = buttonText;
-        } else {
-          equationFontSize = 50.0;
-          resultFontSize = 40.0;
-          equation += buttonText;
-        }
-      }
-    });
-  }
-
+class GetxCalculator extends GetView<CalculatorController> {
   Widget buildButton(String buttonText, double buttonHeight, Color? buttonColor,
       Color? textColor) {
     return Container(
-      width: height * buttonHeight,
-      height: height * buttonHeight,
+      width: controller.height * buttonHeight,
+      height: controller.height * buttonHeight,
       decoration: BoxDecoration(
         color: buttonColor,
         shape: BoxShape.circle,
       ),
       child: ElevatedButton(
-        onPressed: () => buttonPressed(buttonText),
+        onPressed: () => controller.buttonPressed(buttonText),
         style: ElevatedButton.styleFrom(
           primary: buttonColor,
           shape: CircleBorder(),
@@ -151,12 +64,14 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             Container(
               alignment: Alignment.centerRight,
               padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-              child: Text(
-                equation,
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: equationFontSize,
-                  color: Colors.white,
+              child: Obx(
+                () => Text(
+                  controller.equation.toString(),
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: controller.equationFontSize.toDouble(),
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -164,11 +79,13 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
             Container(
               alignment: Alignment.centerRight,
               padding: EdgeInsets.fromLTRB(10, 30, 10, 0),
-              child: Text(
-                result,
-                style: TextStyle(
-                  fontSize: resultFontSize,
-                  color: Colors.white,
+              child: Obx(
+                () => Text(
+                  controller.result.toString(),
+                  style: TextStyle(
+                    fontSize: controller.resultFontSize.toDouble(),
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -179,7 +96,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  width: width * 0.75,
+                  width: controller.width * 0.75,
                   child: Table(
                     children: [
                       TableRow(
@@ -227,7 +144,7 @@ class _SimpleCalculatorState extends State<SimpleCalculator> {
                   ),
                 ),
                 Container(
-                  width: width * 0.25,
+                  width: controller.width * 0.25,
                   child: Table(
                     children: [
                       TableRow(
