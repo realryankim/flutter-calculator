@@ -2,8 +2,6 @@ import 'package:get/get.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 class CalculatorController extends GetxController {
-  static CalculatorController get to => Get.find();
-
   double width = Get.width;
   double height = Get.height;
   RxString equation = "0".obs;
@@ -21,16 +19,14 @@ class CalculatorController extends GetxController {
     } else if (buttonText == "➡") {
       equationFontSize(50.0);
       resultFontSize(40.0);
-      // substring 메서드 활용
-      // equation의 index 0번째부터 equation 길이에서 -1을 한 index 문자열까지 발췌한다. 즉, 문자열 제일 끝만 삭제해 나간다.
+
       equation(equation.substring(0, equation.value.length - 1));
-      if (equation == "") {
+      if (equation.value == "") {
         equation("0");
         equationFontSize(40.0);
         resultFontSize(50.0);
       }
     } else if (buttonText == "%") {
-      // "%" functionality needs to be improved
       equationFontSize(40.0);
       resultFontSize(50.0);
       expression = equation;
@@ -63,7 +59,7 @@ class CalculatorController extends GetxController {
         result("Error");
       }
     } else {
-      if (equation == "0") {
+      if (equation.value == "0") {
         equation(buttonText);
       } else {
         equationFontSize(50.0);

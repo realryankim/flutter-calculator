@@ -18,6 +18,7 @@ class Calculator extends StatelessWidget {
       title: 'Calculator',
       theme: ThemeData(primarySwatch: Colors.grey),
       initialBinding: Binding(),
+      // home: SimpleCalculator(),
       home: GetxCalculator(),
     );
   }

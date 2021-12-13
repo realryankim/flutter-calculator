@@ -30,7 +30,7 @@ class GetxCalculator extends GetView<CalculatorController> {
     );
   }
 
-  // 버튼들 사이에 공간을 만듦
+  // 가로축 버튼들 사이 높이
   TableRow verticalSpacingForThreeButtons() {
     return TableRow(
       children: [
@@ -41,7 +41,7 @@ class GetxCalculator extends GetView<CalculatorController> {
     );
   }
 
-  // 버튼 사이에 공간을 만듦
+  // 버튼 제일 우측 끝, 주황색 버튼 사이 높이
   TableRow verticalSpacingForOneButton() {
     return TableRow(
       children: [
